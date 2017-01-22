@@ -18,8 +18,8 @@
 			<dd id="endereco" th:text="${item.endereco}">Endereco...</dd>
 		</dl>
 		<div class="pull-left">
-			<a href="items" th:href="@{'/items/delete/' + ${item.id}}">remover</a> | 
-			<a href="form.html"	th:href="@{'/items/modify/' + ${item.id}}">alterar</a>
+			<a href="items" th:href="@{'/items/remover/' + ${item.id}}">remover</a> | 
+			<a href="form.html"	th:href="@{'/items/alterar/' + ${item.id}}">alterar</a>
 		</div>
 	</div>
 </body>

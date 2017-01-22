@@ -6,7 +6,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 public class Item {
@@ -16,11 +17,11 @@ public class Item {
 	private Long id;
 
     @NotNull
-    @Size(min=2, max=30)
+    @Length(min=2, max=30,message="O tamanho do nome deve ser entre {min} e {max} caracteres")
 	private String nome;
 
 //    @Min(30)
-    @Min(20)
+    @Min(value=20,message="O valor mínimo deve ser {min} reais")
 	private Double preco;
 	
 	public Item() {}
