@@ -57,8 +57,6 @@ public class RepositoryTest implements ApplicationRunner {
     	System.out.println(">>> Pedido 1 - Fernando : "+ pedidoDoFernando);
     	System.out.println(">>> Pedido 2 - Ze Pequeno: "+ pedidoDoZepequeno);
     	
-		clienteRepository.saveAndFlush(fernando);
-		System.out.println(">>> Gravado cliente 1: "+fernando);
        
 		clienteRepository.saveAndFlush(zePequeno);
 		System.out.println(">>> Gravado cliente 2: "+zePequeno);
@@ -69,6 +67,7 @@ public class RepositoryTest implements ApplicationRunner {
     	fernando.novoPedido(pedido2DoFernando);
     	clienteRepository.saveAndFlush(fernando);
     	System.out.println(">>> Pedido 2 - Fernando : "+ pedido2DoFernando);
+    	System.out.println(">>> Gravado cliente 1: "+fernando);
 		
     }
  

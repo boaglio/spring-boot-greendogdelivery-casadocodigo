@@ -1,0 +1,26 @@
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout">
+<head>
+<title>Item</title>
+</head>
+<body>
+	<h1 layout:fragment="header">Item</h1>
+	<div layout:fragment="content" class="container">
+		<div class="alert alert-success" th:if="${globalMessage}" th:text="${globalMessage}">Some Success item</div>
+		<div class="pull-right">
+			<a th:href="@{/}" href="list.html"> Items </a>
+		</div>
+		<dl>
+			<dt>ID</dt>
+			<dd id="id" th:text="${item.id}">123</dd>
+			<dt>Nome</dt>
+			<dd id="nome" th:text="${item.nome}">Nome...</dd>
+			<dt>Endereço</dt>
+			<dd id="endereco" th:text="${item.endereco}">Endereco...</dd>
+		</dl>
+		<div class="pull-left">
+			<a href="items" th:href="@{'/items/delete/' + ${item.id}}">remover</a> | 
+			<a href="form.html"	th:href="@{'/items/modify/' + ${item.id}}">alterar</a>
+		</div>
+	</div>
+</body>
+</html>

@@ -7,6 +7,6 @@ import com.boaglio.casadocodigo.greendogdelivery.domain.Pedido;
 
 @Repository
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
-
-     
+ 
+	 
 }
