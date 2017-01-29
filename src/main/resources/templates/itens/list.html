@@ -6,11 +6,11 @@
 <title>Itens</title>
 </head>
 <body>
-	<h1 layout:fragment="header">Lista de items</h1>
+	<h1 layout:fragment="header">Lista de itens</h1>
 	<div layout:fragment="content" class="container">
-		<div class="pull-right">
-			<a href="form.html" th:href="@{/items/(form)}">Novo item</a>
-		</div>
+			<a href="form.html" th:href="@{/itens/novo}">Novo item</a>
+		<div class="alert alert-success" th:if="${globalMessage}"
+			th:text="${globalMessage}">mensagem</div>			
 		<table class="table table-bordered table-striped">
 			<thead> 
 				<tr>
@@ -19,12 +19,12 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:if="${items.empty}">
+				<tr th:if="${itens.empty}">
 					<td colspan="3">Sem itens</td>
 				</tr>
-				<tr th:each="item : ${items}">
+				<tr th:each="item : ${itens}">
 					<td th:text="${item.id}">1</td>
-					<td><a href="view.html" th:href="@{'/items/' + ${item.id}}" th:text="${item.nome}"> nome </a></td>
+					<td><a href="view.html" th:href="@{'/itens/' + ${item.id}}" th:text="${item.nome}"> nome </a></td>
 				</tr>
 			</tbody>
 		</table>

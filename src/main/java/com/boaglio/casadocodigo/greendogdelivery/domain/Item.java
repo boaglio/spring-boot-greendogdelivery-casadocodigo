@@ -20,8 +20,8 @@ public class Item {
     @Length(min=2, max=30,message="O tamanho do nome deve ser entre {min} e {max} caracteres")
 	private String nome;
 
-//    @Min(30)
-    @Min(value=20,message="O valor mínimo deve ser {min} reais")
+    @NotNull
+    @Min(value=20,message="O valor mínimo deve ser {value} reais")
 	private Double preco;
 	
 	public Item() {}
