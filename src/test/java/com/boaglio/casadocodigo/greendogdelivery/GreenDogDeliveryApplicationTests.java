@@ -14,7 +14,6 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -23,8 +22,6 @@ import org.springframework.web.context.WebApplicationContext;
  
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@ActiveProfiles("scratch")
-// Separate profile for web tests to avoid clashing databases
 public class GreenDogDeliveryApplicationTests {
 
 	@Autowired
@@ -74,18 +71,33 @@ public class GreenDogDeliveryApplicationTests {
 				.andExpect(jsonPath("_embedded.clientes", hasSize(2)));
 	}
 	
-	@Test
-	public void findItensByNome() throws Exception {
 
-		String URL4="/api/item/por-nome/findByNome?nome=Green Dog max salada";
+	@Test
+	public void cadastraNovoPedido() throws Exception {
+
+		String URL4="/rest/pedido/novo/1/1,2";
 		
 		System.out.println(this.mvc.perform(get(URL4)).andDo(print()));
 		
 		this.mvc.perform(
 				get(URL4))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("preco", equalTo(30)));
+				.andExpect(jsonPath("valorTotal", equalTo("57.0")))
+				.andExpect(jsonPath("pedido", equalTo("4")))
+				.andExpect(jsonPath("mensagem", equalTo("Pedido efetuado com sucesso")));
 	}
 	
+	@Test
+	public void findItensByNome() throws Exception {
+
+		String URL5="/api/itens/por-nome/findByNome?nome=Green Dog max salada";
+		
+		System.out.println(this.mvc.perform(get(URL5)).andDo(print()));
+		
+		this.mvc.perform(
+				get(URL5))
+				.andExpect(status().isOk())
+				.andExpect(jsonPath("preco", equalTo(30)));
+	}
 	
 }

@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 @Entity
-public class Item {
+public class Item  {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

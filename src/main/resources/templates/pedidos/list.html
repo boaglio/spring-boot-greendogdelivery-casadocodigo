@@ -26,7 +26,7 @@
 				</tr>
 				<tr th:each="pedido : ${pedidos}">
 					<td th:text="${pedido.id}">1</td>
-					<td><a href="view.html" th:href="@{'/pedidos/' + ${pedido.id}}" th:text="${pedido.cliente.nome}"> nome </a></td>
+					<td><a href="view.html" th:href="@{'/pedidos/' + ${pedido.id}}"   th:text="${pedido.cliente != null} ? ${pedido.cliente.nome}"> nome </a></td>
 					<td th:text="${#dates.format(pedido.data,'dd-MM-yyyy')}">data</td>
 					<td th:text="${pedido.valorTotal}">1</td>
 				</tr>
