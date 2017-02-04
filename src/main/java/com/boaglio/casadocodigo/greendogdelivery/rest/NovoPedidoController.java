@@ -16,19 +16,22 @@ import com.boaglio.casadocodigo.greendogdelivery.domain.Pedido;
 import com.boaglio.casadocodigo.greendogdelivery.dto.RespostaDTO;
 import com.boaglio.casadocodigo.greendogdelivery.repository.ClienteRepository;
 import com.boaglio.casadocodigo.greendogdelivery.repository.ItemRepository;
+import com.boaglio.casadocodigo.greendogdelivery.util.EnviaNotificacao;
 
 @RestController 
 public class NovoPedidoController {
 
 	
 	@Autowired
-	public NovoPedidoController(ClienteRepository clienteRepository,ItemRepository itemRepository) {
+	public NovoPedidoController(ClienteRepository clienteRepository,ItemRepository itemRepository,EnviaNotificacao enviaNotificacao) {
 		this.clienteRepository =clienteRepository;
 		this.itemRepository=itemRepository;
+		this.enviaNotificacao = enviaNotificacao;
 	}
 
 	private final ClienteRepository clienteRepository;
 	private final ItemRepository itemRepository;
+	private final EnviaNotificacao enviaNotificacao;
 
 	@GetMapping("/rest/pedido/novo/{clienteId}/{listaDeItens}")
 	public RespostaDTO novo(@PathVariable("clienteId") Long clienteId,@PathVariable("listaDeItens") String listaDeItens) {
@@ -57,6 +60,8 @@ public class NovoPedidoController {
 			c.getPedidos().add(pedido);
 
 			this.clienteRepository.saveAndFlush(c);
+			
+			enviaNotificacao.enviaEmail(c,pedido);
 			
 			List<Long> pedidosID = new ArrayList<Long>();
 			for (Pedido p : c.getPedidos()) {
