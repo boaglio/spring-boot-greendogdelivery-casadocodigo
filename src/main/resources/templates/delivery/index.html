@@ -26,9 +26,7 @@
 <script type="text/javascript" src="/js/checklist-model.js"></script>
 <script type="text/javascript" src="/js/delivery.js"></script>
 <style>
-input.field-error, textarea.field-error {
-	border: 1px solid #B94A48;
-}
+.opcao {font-family:'Alegreya Sans', sans-serif;font-weight:300;margin:10px}
 </style>
 </head>
 
@@ -51,25 +49,33 @@ input.field-error, textarea.field-error {
 				<fieldset>
 					<legend>Delivery - Novo Pedido</legend>
 					<div class="form-group">
-						<label class="col-md-4 control-label" for="checkboxes">
+						<label class="col-md-12" for="checkboxes">
+					        <img alt="" src="../img/hotdog.svg" style="width:50px; margin:-12px 0px;" />
 							Cardápio
 						</label>
-						<div class="col-md-4">
-							<div class="checkbox" ng-repeat="i in itens">
-								<label for="checkboxes-0"> 
+					</div>
+					<div class="form-group">
+						<div class="col-md-12">
+							<div  class="checkbox checkbox-primary" ng-repeat="i in itens">
+								<label for="checkboxes-0" class="opcao"> 
 								<input name="checkboxes"
+								    class=" "
 									checklist-model="pedidoItens"
 									checklist-value="i"
 									ng-click="isItemSelecionado(i)"
-									type="checkbox">{{i.nome}} [R${{i.preco}}]
+									type="checkbox">
+									&nbsp;{{i.nome}} [R${{i.preco}}]
 							    </label>
 							</div>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label class="col-md-4 control-label" for="btnSubmit">Subtotal: R${{subTotal}} </label>
-						<div class="col-md-4">
+						<label class="col-md-12" for="btnSubmit">Subtotal: R${{subTotal}} </label>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-md-12">
 							<button id="btnSubmit" name="btnSubmit" ng-click="fazerPedido(pedidoItens)"
 								class="btn btn-primary">Fazer o pedido</button>
 						</div>
