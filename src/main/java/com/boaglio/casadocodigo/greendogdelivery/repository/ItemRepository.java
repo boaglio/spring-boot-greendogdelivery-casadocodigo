@@ -9,11 +9,8 @@ import org.springframework.stereotype.Repository;
 import com.boaglio.casadocodigo.greendogdelivery.domain.Item;
 import com.boaglio.casadocodigo.greendogdelivery.domain.Pedido;
 
-@Repository
+//@Repository
 @RepositoryRestResource(collectionResourceRel = "itens",path = "itens")
 public interface ItemRepository extends JpaRepository<Item, Long> {
-
-	 @RestResource(path = "por-nome")
-	 Pedido findByNome(@Param("nome") String nome);
-	 
+ 
 }

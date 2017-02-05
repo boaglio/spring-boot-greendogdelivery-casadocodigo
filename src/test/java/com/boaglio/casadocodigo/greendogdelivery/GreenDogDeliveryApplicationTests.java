@@ -2,7 +2,9 @@ package com.boaglio.casadocodigo.greendogdelivery;
 
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.greaterThan;
 import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
@@ -82,22 +84,22 @@ public class GreenDogDeliveryApplicationTests {
 		this.mvc.perform(
 				get(URL4))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("valorTotal", equalTo("57.0")))
-				.andExpect(jsonPath("pedido", equalTo("4")))
+				.andExpect(jsonPath("valorTotal", is(57.0)))
+				.andExpect(jsonPath("pedido", greaterThan(3)))
 				.andExpect(jsonPath("mensagem", equalTo("Pedido efetuado com sucesso")));
 	}
 	
 	@Test
-	public void findItensByNome() throws Exception {
+	public void findItem2() throws Exception {
 
-		String URL5="/api/itens/por-nome/findByNome?nome=Green Dog max salada";
+		String URL5="/api/itens/2";
 		
 		System.out.println(this.mvc.perform(get(URL5)).andDo(print()));
 		
 		this.mvc.perform(
 				get(URL5))
 				.andExpect(status().isOk())
-				.andExpect(jsonPath("preco", equalTo(30)));
+				.andExpect(jsonPath("preco", equalTo(30.0)));
 	}
 	
 }
