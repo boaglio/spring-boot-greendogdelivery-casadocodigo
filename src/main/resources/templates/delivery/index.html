@@ -23,8 +23,8 @@
 <script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!--  Angular -->
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
-<script type="text/javascript" src="/js/checklist-model.js"></script>
-<script type="text/javascript" src="/js/delivery.js"></script>
+<script type="text/javascript" th:src="@{/js/checklist-model.js}"></script>
+<script type="text/javascript" th:src="@{/js/delivery.js}"></script>
 <style>
 .opcao {font-family:'Alegreya Sans', sans-serif;font-weight:300;margin:10px}
 </style>
@@ -91,9 +91,15 @@
              <div class="alert alert-warning" ng-show="idPedido!=null">
 			  Chamada do serviço: <strong>{{urlPedido}}</strong> 
 			</div>
-	        <fieldset>
-	        {{message}}
-	        </fieldset>
+	        <fieldset>{{message}}</fieldset>
+	        <div class="alert alert-danger" ng-show="oferta!=null">
+	         <img th:src="@{/img/oferta.png}"/>{{oferta}}
+	          <div  ng-show="debug=='on'">
+	           <br/> 
+	           <img th:src="@{/img/servidor.png}"/>
+	           <strong>{{servidor}}</strong>
+	          </div>
+	        </div>
 		</div>
 	</div>
 </body>

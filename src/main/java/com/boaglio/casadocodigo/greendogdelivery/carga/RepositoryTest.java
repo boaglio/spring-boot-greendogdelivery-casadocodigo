@@ -14,7 +14,9 @@ import com.boaglio.casadocodigo.greendogdelivery.domain.Pedido;
 import com.boaglio.casadocodigo.greendogdelivery.repository.ClienteRepository;
 
 @Component
-public class RepositoryTest implements ApplicationRunner {
+public class RepositoryTest 
+//implements ApplicationRunner 
+{
 
 	private static final long ID_CLIENTE_FERNANDO = 11l;
 	private static final long ID_CLIENTE_ZE_PEQUENO = 22l;
@@ -30,7 +32,7 @@ public class RepositoryTest implements ApplicationRunner {
 	@Autowired
     private ClienteRepository clienteRepository;
 	
-    @Override
+//    @Override
     public void run(ApplicationArguments applicationArguments) throws Exception {
 
     	System.out.println(">>> Iniciando carga de dados...");
