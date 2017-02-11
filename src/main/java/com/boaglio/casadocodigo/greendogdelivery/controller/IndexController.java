@@ -57,10 +57,10 @@ public class IndexController {
 		return request.getServerName() + ":" + request.getServerPort();
 	}
 
-    @Value("${mensagem}")
+//    @Value("${mensagem}")
     private String message;
 
-    @Value("${debug}")
+//    @Value("${debug}")
     private String debug;
 
     @GetMapping("/oferta")
