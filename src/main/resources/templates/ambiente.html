@@ -4,7 +4,7 @@
 </head>
 <body>
  <h1 layout:fragment="header">Ambiente</h1>
- <th:block layout:fragment="content">
+ <div layout:fragment="content" class="container">
   <div class="hero-unit">
         <p>
             <a href="#" th:href="@{/properties}" class="btn btn-large btn-success">System Properties</a>
@@ -104,6 +104,6 @@
             </tbody>
         </table>
     </div>
-</th:block>
+ </div>
 </body>
 </html>
