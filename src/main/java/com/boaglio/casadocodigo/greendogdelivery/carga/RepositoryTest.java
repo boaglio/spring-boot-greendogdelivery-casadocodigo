@@ -1,5 +1,4 @@
 package com.boaglio.casadocodigo.greendogdelivery.carga;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +14,7 @@ import com.boaglio.casadocodigo.greendogdelivery.repository.ClienteRepository;
 
 @Component
 public class RepositoryTest 
-//implements ApplicationRunner 
+implements ApplicationRunner 
 {
 
 	private static final long ID_CLIENTE_FERNANDO = 11l;
@@ -32,7 +31,7 @@ public class RepositoryTest
 	@Autowired
     private ClienteRepository clienteRepository;
 	
-//    @Override
+    @Override
     public void run(ApplicationArguments applicationArguments) throws Exception {
 
     	System.out.println(">>> Iniciando carga de dados...");
