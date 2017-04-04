@@ -1,0 +1,99 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	ng-app="delivery">
+<head>
+<title>Green Dog Delivery</title>
+<!-- Bootstrap -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous"/>
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous"/>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
+<!--  JQuery -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"/>
+<script type="text/javascript" src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<!--  Angular -->
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.js"></script>
+<script type="text/javascript" th:src="@{/js/checklist-model.js}"></script>
+<script type="text/javascript" th:src="@{/js/delivery.js}"></script>
+<style>
+.opcao {font-family:'Alegreya Sans', sans-serif;font-weight:300;margin:10px}
+</style>
+</head>
+
+<body>
+	<div class="container">
+ <nav class="navbar navbar-default navbar-static-top">
+   <div class="navbar-header">
+      <a class="navbar-brand" th:href="@{/}"><img th:src="@{/img/hotdog-logo.png}"/></a>
+    </div>
+	<ul class="nav navbar-nav">
+	  <li><a class="brand" href="https://www.casadocodigo.com.br">Casa do Código</a></li>
+	  <li><a class="brand" href="https://www.boaglio.com">boaglio.com</a></li>
+	  <li><a class="brand" href="https://projects.spring.io/spring-boot/">Spring Boot</a></li>
+	  <li><a class="brand" href="https://github.com/ultraq/thymeleaf-layout-dialect">Thymeleaf Layout</a></li>
+	</ul>
+ </nav>
+		<div ng-controller="pedidoController">
+
+			<form class="form-horizontal">
+				<fieldset>
+					<legend>Delivery - Novo Pedido</legend>
+					<div class="form-group">
+						<label class="col-md-12" for="checkboxes">
+					        <img alt="" src="../img/hotdog.svg" style="width:50px; margin:-12px 0px;" />
+							Cardápio
+						</label>
+					</div>
+					<div class="form-group">
+						<div class="col-md-12">
+							<div  class="checkbox checkbox-primary" ng-repeat="i in itens">
+								<label for="checkboxes-0" class="opcao"> 
+								<input name="checkboxes"
+								    class=" "
+									checklist-model="pedidoItens"
+									checklist-value="i"
+									ng-click="isItemSelecionado(i)"
+									type="checkbox">
+									&nbsp;{{i.nome}} [R${{i.preco}}]
+							    </label>
+							</div>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-12" for="btnSubmit">Subtotal: R${{subTotal}} </label>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-md-12">
+							<button id="btnSubmit" name="btnSubmit" ng-click="fazerPedido(pedidoItens)"
+								class="btn btn-primary">Fazer o pedido</button>
+						</div>
+					</div>
+				</fieldset>
+			</form>
+			<div class="alert alert-success" ng-show="idPedido!=null">
+              <strong>Pedido {{idPedido}}</strong>  {{mensagem}} 
+            </div>
+            <div class="alert alert-warning" ng-show="idPedido!=null">
+			  Valor do pedido: <strong>{{valorTotal}}</strong> reais.
+			</div>
+             <div class="alert alert-warning" ng-show="idPedido!=null">
+			  Chamada do serviço: <strong>{{urlPedido}}</strong> 
+			</div>
+	        <fieldset>{{message}}</fieldset>
+	       
+		</div>
+	</div>
+</body>
+</html>

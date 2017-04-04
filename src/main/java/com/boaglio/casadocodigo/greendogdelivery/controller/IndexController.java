@@ -27,5 +27,10 @@ public class IndexController {
 	Properties properties() {
 		return System.getProperties();
 	}
-    
+
+	@GetMapping("/delivery")
+	public String delivery() {
+		return "delivery/index";
+	}
+
 }
