@@ -1,5 +1,5 @@
 
-cd target
+export MAVEN_OPTS="-Xmx512m"
 
-java -jar  -Dserver.port=8083 green-dog-delivery-1.0.0-SNAPSHOT.jar
+mvn spring-boot:run -Drun.arguments="--spring.profiles.active=cliente3"
 
