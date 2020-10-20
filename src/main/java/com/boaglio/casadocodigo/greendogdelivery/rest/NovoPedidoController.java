@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -36,7 +37,8 @@ public class NovoPedidoController {
 		RespostaDTO dto = new RespostaDTO();
 
 		try {
-			Cliente c = clienteRepository.findOne(clienteId);
+			Optional<Cliente> clienteOpt = clienteRepository.findById(clienteId);
+			Cliente c = clienteOpt.get();
 
 			String[] listaDeItensID = listaDeItens.split(",");
 
@@ -46,7 +48,8 @@ public class NovoPedidoController {
 			List<Item> itensPedidos = new ArrayList<Item>();
 
 			for (String itemId : listaDeItensID) {
-				Item item = itemRepository.findOne(Long.parseLong(itemId));
+				Optional<Item> itemOpt = itemRepository.findById(Long.parseLong(itemId));
+				Item item = itemOpt.get(); 
 				itensPedidos.add(item);
 				valorTotal += item.getPreco();
 			}
