@@ -53,7 +53,7 @@ public class ItemController {
 
 	@GetMapping(value = "remover/{id}")
 	public ModelAndView remover(@PathVariable("id") Long id,RedirectAttributes redirect) {
-		this.itemRepository.delete(id);
+		this.itemRepository.deleteById(id);
 		Iterable<Item> itens = this.itemRepository.findAll();
 		
 		ModelAndView mv = new ModelAndView(ITEM_URI + "list","itens",itens);
