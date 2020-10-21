@@ -3,6 +3,7 @@ package com.boaglio.casadocodigo.greendogdelivery.controller;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -64,8 +65,13 @@ public class PedidoController {
 		if (result.hasErrors()) { return new ModelAndView(ITEM_URI + "form","formErrors",result.getAllErrors()); }
 
 		if (pedido.getId() != null) {
-			Pedido pedidoParaAlterar = pedidoRepository.findOne(pedido.getId());
-			Cliente c = clienteRepository.findOne(pedidoParaAlterar.getCliente().getId());
+			
+			Optional<Pedido> pedidoParaAlterarOpt = pedidoRepository.findById(pedido.getId());
+			Pedido pedidoParaAlterar = pedidoParaAlterarOpt.get();
+						
+			Optional<Cliente> clienteOpt = clienteRepository.findById(pedidoParaAlterar.getCliente().getId());
+			Cliente c = clienteOpt.get();
+			
 			pedidoParaAlterar.setItens(pedido.getItens());
 			double valorTotal = 0;
 			for (Item i : pedido.getItens()) {
@@ -73,11 +79,14 @@ public class PedidoController {
 			}
 			pedidoParaAlterar.setData(pedido.getData());
 			pedidoParaAlterar.setValorTotal(valorTotal);			
-			c.getPedidos().remove(pedidoParaAlterar.getId());
+			c.getPedidos().remove(pedidoParaAlterar);
 			c.getPedidos().add(pedidoParaAlterar);
 			this.clienteRepository.save(c);
 		} else {
-			Cliente c = clienteRepository.findOne(pedido.getCliente().getId());
+			
+			Optional<Cliente> clienteOpt = clienteRepository.findById(pedido.getCliente().getId());
+			Cliente c = clienteOpt.get();
+			 
 			double valorTotal = 0;
 			for (Item i : pedido.getItens()) {
 				valorTotal +=i.getPreco();
@@ -94,13 +103,16 @@ public class PedidoController {
 	@GetMapping(value = "remover/{id}")
 	public ModelAndView remover(@PathVariable("id") Long id,RedirectAttributes redirect) {
 
-		Pedido pedidoParaRemover = pedidoRepository.findOne(id);
+		Optional<Pedido> pedidoParaRemoverOpt = pedidoRepository.findById(id);
+		Pedido pedidoParaRemover = pedidoParaRemoverOpt.get();
 
-		Cliente c = clienteRepository.findOne(pedidoParaRemover.getCliente().getId());
+		Optional<Cliente> clienteOpt = clienteRepository.findById(pedidoParaRemover.getCliente().getId());
+		Cliente c = clienteOpt.get();
+ 
 		c.getPedidos().remove(pedidoParaRemover);
 
 		this.clienteRepository.save(c);
-		this.pedidoRepository.delete(id);
+		this.pedidoRepository.deleteById(id);
 
 		Iterable<Pedido> pedidos = this.pedidoRepository.findAll();
 
