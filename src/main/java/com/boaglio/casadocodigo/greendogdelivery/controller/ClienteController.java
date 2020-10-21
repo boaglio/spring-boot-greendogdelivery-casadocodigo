@@ -53,7 +53,7 @@ public class ClienteController {
 
 	@GetMapping(value = "remover/{id}")
 	public ModelAndView remover(@PathVariable("id") Long id,RedirectAttributes redirect) {
-		this.clienteRepository.delete(id);
+		this.clienteRepository.deleteById(id);
 		Iterable<Cliente> clientes = this.clienteRepository.findAll();
 		
 		ModelAndView mv = new ModelAndView(CLIENTE_URI + "list","clientes",clientes);
