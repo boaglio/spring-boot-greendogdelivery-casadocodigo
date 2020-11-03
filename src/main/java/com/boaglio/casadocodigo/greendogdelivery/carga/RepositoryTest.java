@@ -8,6 +8,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import com.boaglio.casadocodigo.greendogdelivery.api.FluxoPedido;
 import com.boaglio.casadocodigo.greendogdelivery.domain.Cliente;
 import com.boaglio.casadocodigo.greendogdelivery.domain.Item;
 import com.boaglio.casadocodigo.greendogdelivery.domain.Pedido;
@@ -15,7 +16,7 @@ import com.boaglio.casadocodigo.greendogdelivery.repository.ClienteRepository;
 
 @Component
 public class RepositoryTest 
-//implements ApplicationRunner 
+ implements ApplicationRunner 
 {
 
 	private static final long ID_CLIENTE_FERNANDO = 11l;
@@ -32,7 +33,7 @@ public class RepositoryTest
 	@Autowired
     private ClienteRepository clienteRepository;
 	
-//    @Override
+    @Override
     public void run(ApplicationArguments applicationArguments) throws Exception {
 
     	System.out.println(">>> Iniciando carga de dados...");
@@ -50,10 +51,10 @@ public class RepositoryTest
     	listaPedidoZePequeno1.add(dog2);
     	listaPedidoZePequeno1.add(dog3);
     	
-    	Pedido pedidoDoFernando = new Pedido(ID_PEDIDO1,fernando,listaPedidoFernando1,dog1.getPreco());
+    	Pedido pedidoDoFernando = new Pedido(ID_PEDIDO1,fernando,listaPedidoFernando1,dog1.getPreco(),FluxoPedido.CHEGOU_NA_COZINHA.name() );
     	fernando.novoPedido(pedidoDoFernando);
     	
-    	Pedido pedidoDoZepequeno = new Pedido(ID_PEDIDO2,zePequeno,listaPedidoZePequeno1, dog2.getPreco()+dog3.getPreco());
+    	Pedido pedidoDoZepequeno = new Pedido(ID_PEDIDO2,zePequeno,listaPedidoZePequeno1, dog2.getPreco()+dog3.getPreco(),FluxoPedido.CHEGOU_NA_COZINHA.name());
     	zePequeno.novoPedido(pedidoDoZepequeno);
     	
     	System.out.println(">>> Pedido 1 - Fernando : "+ pedidoDoFernando);
@@ -65,7 +66,7 @@ public class RepositoryTest
 
 		List<Item> listaPedidoFernando2 = new ArrayList<Item>();
 		listaPedidoFernando2.add(dog2);
-    	Pedido pedido2DoFernando  = new Pedido(ID_PEDIDO3,fernando,listaPedidoFernando2,dog2.getPreco());
+    	Pedido pedido2DoFernando  = new Pedido(ID_PEDIDO3,fernando,listaPedidoFernando2,dog2.getPreco(),FluxoPedido.CHEGOU_NA_COZINHA.name());
     	fernando.novoPedido(pedido2DoFernando);
     	clienteRepository.saveAndFlush(fernando);
     	System.out.println(">>> Pedido 2 - Fernando : "+ pedido2DoFernando);

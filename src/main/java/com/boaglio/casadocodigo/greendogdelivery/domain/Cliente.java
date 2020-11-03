@@ -15,6 +15,8 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Cliente {
 
@@ -30,6 +32,7 @@ public class Cliente {
     @Length(min=2, max=300,message="O tamanho do endereço deve ser entre {min} e {max} caracteres")
 	private String endereco;
 	
+    @JsonIgnore
 	@OneToMany(mappedBy = "cliente",fetch = FetchType.EAGER)
 	@Cascade(CascadeType.ALL)
 	private List<Pedido> pedidos;
