@@ -73,7 +73,6 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 		</dependency>        
- 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -94,7 +93,7 @@
 				<configuration>
 				 <repository>boaglio/green-dog-delivery</repository>
 				 <tag>${docker-app-version}</tag>
-                 <baseImage>openjdk/11-alpine</baseImage>
+                 <baseImage>openjdk/11</baseImage>
                  <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
                  <exposes>8080</exposes>
 					<resources>
@@ -106,7 +105,7 @@
 					</resources>
 				</configuration>
 			</plugin>	
-			<!--  docker run -p 8080:8080 greendogdelivery:latest -->
+			<!--  docker run -p 8080:8080 green-dog-delivery:2.3 -->
 		</plugins>
 	</build>
 
