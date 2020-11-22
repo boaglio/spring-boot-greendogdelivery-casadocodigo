@@ -1,22 +1,20 @@
-# h2
-spring.h2.console.enabled=true
-spring.h2.console.path=/h2
-# jpa
-spring.jpa.show-sql=true
-spring.datasource.url=jdbc:h2:mem:greendog
-
-#rest
-spring.data.rest.base-path=/api
-
-# template
-spring.thymeleaf.cache = false
-
-# Hypermedia As The Engine Of Application State
-spring.hateoas.use-hal-as-default-json-media-type=false
-
-# permite acesso ao Actuator
-management.security.enabled=false
-
-# profile
-spring.profiles.active=dev
- 
+server:
+  port: 8080
+spring:
+  data:
+    rest:
+      base-path: /api
+  datasource:
+    url: jdbc:h2:mem:greendog
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  hateoas:
+    use-hal-as-default-json-media-type: false
+  jpa:
+    show-sql: true
+  profiles:
+    active: dev
+  thymeleaf:
+    cache: false

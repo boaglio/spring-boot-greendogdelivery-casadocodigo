@@ -23,20 +23,23 @@ import com.boaglio.casadocodigo.greendogdelivery.domain.Pedido;
 import com.boaglio.casadocodigo.greendogdelivery.repository.ClienteRepository;
 import com.boaglio.casadocodigo.greendogdelivery.repository.ItemRepository;
 import com.boaglio.casadocodigo.greendogdelivery.repository.PedidoRepository;
+import com.boaglio.casadocodigo.greendogdelivery.service.AtualizaEstoque;
 
 @Controller
 @RequestMapping("/pedidos")
 public class PedidoController {
 
+	private final AtualizaEstoque atualizaEstoque;
 	private final PedidoRepository pedidoRepository;
 	private final ItemRepository itemRepository;
 	private final ClienteRepository clienteRepository;
 	private final String ITEM_URI = "pedidos/";
 
-	public PedidoController(PedidoRepository pedidoRepository,ItemRepository itemRepository,ClienteRepository clienteRepository) {
+	public PedidoController(PedidoRepository pedidoRepository,ItemRepository itemRepository,ClienteRepository clienteRepository,AtualizaEstoque atualizaEstoque) {
 		this.pedidoRepository = pedidoRepository;
 		this.itemRepository = itemRepository;
 		this.clienteRepository = clienteRepository;
+		this.atualizaEstoque = atualizaEstoque;
 	}
 
 	@GetMapping("/")
@@ -95,6 +98,8 @@ public class PedidoController {
 			pedido = this.pedidoRepository.save(pedido);
 			c.getPedidos().add(pedido);
 			this.clienteRepository.save(c);
+			// atualiza estoque
+			atualizaEstoque.processar(pedido);
 		}
 		redirect.addFlashAttribute("globalMessage","Pedido gravado com sucesso");
 		return new ModelAndView("redirect:/" + ITEM_URI + "{pedido.id}","pedido.id",pedido.getId());
