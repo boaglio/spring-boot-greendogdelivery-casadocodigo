@@ -23,7 +23,7 @@ public class ClienteRepositoryTest {
 	@Test
 	public void buscaClientesCadastrados() {
 
-		Page<Cliente> clientes = this.repository.findAll(new PageRequest(0, 10));
+		Page<Cliente> clientes = this.repository.findAll(PageRequest.of(0, 10));
 		assertThat(clientes.getTotalElements()).isGreaterThan(1L);
 	}
 
