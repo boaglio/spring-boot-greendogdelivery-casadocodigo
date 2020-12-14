@@ -87,7 +87,12 @@
 			<groupId>org.springframework.amqp</groupId>
 			<artifactId>spring-rabbit-test</artifactId>
 			<scope>test</scope>
-		</dependency>		
+		</dependency>	
+		<!--  Reactive -->
+		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-webflux</artifactId>
+	    </dependency>
 	</dependencies>
 
  	<build>

@@ -18,7 +18,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class AtualizaEstoque {
 
 	private enum TIPOS_DE_METODO {
-		REST, FILA, REST_REATIVO;
+		REST, FILA;
 	};
 
 	private TIPOS_DE_METODO metodo = TIPOS_DE_METODO.REST;
@@ -47,16 +47,16 @@ public class AtualizaEstoque {
 
 					String jsonEstoque = null;
 					try {
-						jsonEstoque = mapper.writeValueAsString(new Estoque(item.getId(),1l));
+						jsonEstoque = mapper.writeValueAsString(new Estoque(item.getId(), 1l));
 					} catch (JsonProcessingException e) {
 						e.printStackTrace();
 					}
 
 					HttpHeaders headers = new HttpHeaders();
-				    headers.setContentType(MediaType.APPLICATION_JSON);
-					HttpEntity<String> request = new HttpEntity<>(jsonEstoque,headers);
+					headers.setContentType(MediaType.APPLICATION_JSON);
+					HttpEntity<String> request = new HttpEntity<>(jsonEstoque, headers);
 					System.out.println("Request POST = " + request.toString());
-					
+
 					String resultadoPost = restTemplate.postForObject(URL_ATUALIZA_ESTOQUE, request, String.class);
 					System.out.println("Resultado POST = " + resultadoPost);
 				}
@@ -68,11 +68,7 @@ public class AtualizaEstoque {
 				producer.send(pedido);
 				break;
 
-			case REST_REATIVO:
-
-				break;
 			}
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
