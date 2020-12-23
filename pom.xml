@@ -5,7 +5,7 @@
 
 	<groupId>com.boaglio.casadocodigo</groupId>
 	<artifactId>green-dog-delivery</artifactId>
-	<version>2.3-SNAPSHOT</version> 
+	<version>2.4-SNAPSHOT</version> 
 	<packaging>jar</packaging>
 
 	<name>greendogdelivery</name>
@@ -14,14 +14,15 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.3.RELEASE</version>
-		<relativePath/> <!-- lookup parent from repository -->
+		<version>2.4.1</version>
+		<relativePath/> 
 	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>11</java.version>
+		<spring.data.hal.version>3.3.6.RELEASE</spring.data.hal.version>
 	</properties>
 
 	<dependencies>
@@ -32,6 +33,7 @@
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-rest-hal-browser</artifactId>
+			<version>${spring.data.hal.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -66,6 +68,18 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+        <!-- JUnit 5 -->
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.hamcrest</groupId>
+                    <artifactId>hamcrest-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>		
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
