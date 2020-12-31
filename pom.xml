@@ -24,7 +24,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<main.basedir>${basedir}/../..</main.basedir>
 		<dockerfile-maven-version>1.4.13</dockerfile-maven-version>
-		<docker-app-version>2.3</docker-app-version>
+		<docker-app-version>2.4</docker-app-version>
 	</properties>
 
 	<dependencies>
