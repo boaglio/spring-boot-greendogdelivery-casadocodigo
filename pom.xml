@@ -27,12 +27,6 @@
 	</properties>
 
 	<dependencies>
-	   <!-- em prod 
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-remote-shell</artifactId>
-		</dependency>
-		-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -90,16 +84,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- RabbitMQ -->
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-amqp</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.amqp</groupId>
-			<artifactId>spring-rabbit-test</artifactId>
-			<scope>test</scope>
-		</dependency>		
 	</dependencies>
 
  	<build>
