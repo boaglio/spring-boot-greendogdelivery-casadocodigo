@@ -17,22 +17,24 @@ import com.boaglio.casadocodigo.greendogdelivery.domain.Pedido;
 import com.boaglio.casadocodigo.greendogdelivery.dto.RespostaDTO;
 import com.boaglio.casadocodigo.greendogdelivery.repository.ClienteRepository;
 import com.boaglio.casadocodigo.greendogdelivery.repository.ItemRepository;
+import com.boaglio.casadocodigo.greendogdelivery.service.AtualizaEstoque;
 import com.boaglio.casadocodigo.greendogdelivery.util.EnviaNotificacao;
 
 @RestController 
 public class NovoPedidoController {
 
-	
 	@Autowired
-	public NovoPedidoController(ClienteRepository clienteRepository,ItemRepository itemRepository,EnviaNotificacao enviaNotificacao) {
+	public NovoPedidoController(ClienteRepository clienteRepository,ItemRepository itemRepository,EnviaNotificacao enviaNotificacao,AtualizaEstoque atualizaEstoque) {
 		this.clienteRepository =clienteRepository;
 		this.itemRepository=itemRepository;
 		this.enviaNotificacao = enviaNotificacao;
+		this.atualizaEstoque = atualizaEstoque;
 	}
 
 	private final ClienteRepository clienteRepository;
 	private final ItemRepository itemRepository;
 	private final EnviaNotificacao enviaNotificacao;
+	private final AtualizaEstoque atualizaEstoque;
 
 	@GetMapping("/rest/pedido/novo/{clienteId}/{listaDeItens}")
 	public RespostaDTO novo(@PathVariable("clienteId") Long clienteId,@PathVariable("listaDeItens") String listaDeItens) {
@@ -76,6 +78,9 @@ public class NovoPedidoController {
 
 			Long ultimoPedido = Collections.max(pedidosID);
 
+			// atualiza estoque
+			atualizaEstoque.processar(pedido);
+			
 			dto = new RespostaDTO(ultimoPedido,valorTotal,"Pedido efetuado com sucesso");
 
 		} catch (Exception e) {
