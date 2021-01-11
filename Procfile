@@ -1,1 +1,1 @@
-web java -Dserver.port=$PORT $JAVA_OPTS -jar target/green-dog-delivery-2.3.0-SNAPSHOT.jar -Dspring.profiles.active=heroku
+web java -Dserver.port=$PORT $JAVA_OPTS -jar target/green-dog-delivery-2.4.0-SNAPSHOT.jar -Dspring.profiles.active=heroku
