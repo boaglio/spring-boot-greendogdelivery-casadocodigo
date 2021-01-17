@@ -18,3 +18,16 @@ spring:
     active: dev
   thymeleaf:
     cache: false
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+  trace:
+    http:
+      enabled: true        
+        
