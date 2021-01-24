@@ -39,7 +39,9 @@ app.controller('pedidoController', function($scope,$location,$http) {
    		   pedidoStr+=prefixo+$scope.pedidoItens[i].id;
    		   prefixo=",";
           }
-    	  $scope.urlPedido="/rest/pedido/novo/2/"+pedidoStr;
+          // $scope.urlPedido="/rest/pedido/novo/2/"+pedidoStr;
+    	  // $scope.urlPedido="http://localhost:8081/rest/pedido/novo/2/"+pedidoStr;
+          $scope.urlPedido="http://localhost:10000/rest/pedido/novo/2/"+pedidoStr;
 	      $http.get( $scope.urlPedido).success(function (data) {
 	        $scope.idPedido= data["pedido"];
 	        $scope.mensagem= data["mensagem"];

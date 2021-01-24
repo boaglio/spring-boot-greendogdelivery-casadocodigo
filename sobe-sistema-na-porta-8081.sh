@@ -1,3 +1,3 @@
-export MAVEN_OPTS="-Xmx512m"
+mvn package
 
-mvn spring-boot:run -Drun.arguments="--spring.profiles.active=cliente1"
+java -jar target/green-dog-delivery-2.4.0-SNAPSHOT.jar  --spring.config.location=src/main/resources/application-back-end1.properties

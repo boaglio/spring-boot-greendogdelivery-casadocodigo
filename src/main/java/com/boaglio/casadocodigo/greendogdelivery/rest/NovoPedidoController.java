@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +34,10 @@ public class NovoPedidoController {
 	private final ClienteRepository clienteRepository;
 	private final ItemRepository itemRepository;
 	private final EnviaNotificacao enviaNotificacao;
-
+	
+	
+	
+    @CrossOrigin(origins = {"http://localhost:8080"})
 	@GetMapping("/rest/pedido/novo/{clienteId}/{listaDeItens}")
 	public RespostaDTO novo(@PathVariable("clienteId") Long clienteId,@PathVariable("listaDeItens") String listaDeItens) {
 
@@ -77,7 +81,7 @@ public class NovoPedidoController {
 			Long ultimoPedido = Collections.max(pedidosID);
 
 			dto = new RespostaDTO(ultimoPedido,valorTotal,"Pedido efetuado com sucesso");
-
+ 
 		} catch (Exception e) {
 			dto.setMensagem("Erro: " + e.getMessage());
 		}
