@@ -54,6 +54,7 @@ public class IndexController {
 	@GetMapping("/servidor")
 	@ResponseBody
 	public String server(HttpServletRequest request) {
+		System.out.println(">>> Chamada end-point servidor...");
 		return request.getServerName() + ":" + request.getServerPort();
 	}
 
