@@ -16,4 +16,4 @@ hs_err_pid*
 .settings/*
 .attach*
 target/
-
+.springBeans 
