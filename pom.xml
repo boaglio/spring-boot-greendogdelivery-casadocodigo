@@ -5,7 +5,7 @@
 
 	<groupId>com.boaglio.casadocodigo</groupId>
 	<artifactId>green-dog-delivery</artifactId>
-	<version>2.4-SNAPSHOT</version> 
+	<version>3.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>greendogdelivery</name>
@@ -14,14 +14,14 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.1</version>
+		<version>3.2.1</version>
 		<relativePath/> 
 	</parent>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<spring.data.hal.version>3.3.6.RELEASE</spring.data.hal.version>
 	</properties>
 
