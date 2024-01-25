@@ -8,7 +8,6 @@
 <body>
 	<h1 layout:fragment="header">Lista de pedidos</h1>
 	<div layout:fragment="content" class="container">
-			<a href="form.html" th:href="@{/pedidos/novo}">Novo pedido</a>
 		<div class="alert alert-success" th:if="${globalMessage}"
 			th:text="${globalMessage}">mensagem</div>			
 		<table class="table table-bordered table-striped">
@@ -32,6 +31,7 @@
 				</tr>
 			</tbody>
 		</table>
+		<a href="form.html" th:href="@{/pedidos/novo}" class="btn btn-secondary">Novo pedido</a>
 	</div>
 </body>
 </html>

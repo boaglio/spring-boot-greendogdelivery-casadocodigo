@@ -1,34 +1,57 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
  <title>Green Dog Delivery</title>
  <!-- Bootstrap -->
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+ <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
  <!--  JQuery -->
- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
- <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+ <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+ <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+ <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
  <style>
    input.field-error, textarea.field-error { border: 1px solid #B94A48; }
  </style>
 </head>
-<body>
- <div class="container">
- <nav class="navbar navbar-default navbar-static-top">
-   <div class="navbar-header">
-      <a class="navbar-brand" th:href="@{/}"><img src="../static/img/hotdog-logo.png" th:src="@{/img/hotdog-logo.png}"/></a>
+<body class="p-3 m-0 border-0 m-0 border-0">
+  <nav class="navbar navbar-expand bg-body-tertiary">
+   <div class="container">
+    <a class="navbar-brand" th:href="@{/}"><img src="../static/img/hotdog-logo.png" th:src="@{/img/hotdog-logo.png}"/></a>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+     <ul class="navbar-nav p-2">
+       <li class="nav-item dropdown">
+         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+             Green Dog Delivery
+         </a>
+         <ul class="dropdown-menu">
+             <li><a th:href="@{/properties}" class="dropdown-item">Ambiente</a></li>
+             <li><a th:href="@{/h2}" class="dropdown-item">H2 Console</a></li>
+             <li><a th:href="@{/clientes/}" class="dropdown-item">Cadastro de clientes</a></li>
+             <li><a th:href="@{/itens/}" class="dropdown-item">Cadastro de itens</a></li>
+             <li><a th:href="@{/pedidos/}" class="dropdown-item">Cadastro de pedidos</a></li>
+         </ul>
+      </li>
+     </ul>
     </div>
-	<ul class="nav navbar-nav">
-	  <li><a class="brand" href="https://www.casadocodigo.com.br" target="_BLANK" >Casa do Código</a></li>
-	  <li><a class="brand" href="https://www.boaglio.com" target="_BLANK">boaglio.com</a></li>
-	  <li><a class="brand" href="https://projects.spring.io/spring-boot/" target="_BLANK">Spring Boot</a></li>
-	  <li><a class="brand" href="https://github.com/ultraq/thymeleaf-layout-dialect" target="_BLANK">Thymeleaf Layout</a></li>
-	</ul>
- </nav>
- <h1 layout:fragment="header">cabeçalho falso</h1>
- <div layout:fragment="content">content falso</div>
-</div>
+     <div class="d-flex align-items-center">
+        <div class="collapse navbar-collapse" id="navbarNav">
+           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item"><a class="nav-link" href="https://www.casadocodigo.com.br" target="_BLANK" >Casa do Código</a></li>
+              <li class="nav-item"><a class="nav-link" href="https://boaglio.com" target="_BLANK">boaglio.com</a></li>
+              <li class="nav-item"><a class="nav-link" href="https://projects.spring.io/spring-boot/" target="_BLANK">Spring Boot</a></li>
+              <li class="nav-item"><a class="nav-link" href="https://github.com/ultraq/thymeleaf-layout-dialect" target="_BLANK">Thymeleaf Layout</a></li>
+              <li class="nav-item"><a class="nav-link" href="https://getbootstrap.com" target="_BLANK">Bootstrap</a></li>
+    	  </ul>
+        </div>
+      </div>
+     </div>
+  </nav>
+ </div>
+ <div class=" container-lg text-center">
+   <h1 layout:fragment="header">cabeçalho falso</h1>
+   <div layout:fragment="content" >content falso</div>
+ </div>
 </body>
 </html>

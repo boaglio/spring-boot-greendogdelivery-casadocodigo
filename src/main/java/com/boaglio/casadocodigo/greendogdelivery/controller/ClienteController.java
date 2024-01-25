@@ -1,7 +1,7 @@
 
 package com.boaglio.casadocodigo.greendogdelivery.controller;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -29,7 +29,7 @@ public class ClienteController {
 
 	@GetMapping("/")
 	public ModelAndView list() {
-		Iterable<Cliente> clientes = this.clienteRepository.findAll();
+		var clientes = this.clienteRepository.findAll();
 		return new ModelAndView(CLIENTE_URI + "list","clientes",clientes);
 	}
 
@@ -43,7 +43,7 @@ public class ClienteController {
 		return CLIENTE_URI + "form";
 	}
 
-	@PostMapping(params = "form")
+	@PostMapping(value = "/", params = "form")
 	public ModelAndView create(@Valid Cliente cliente,BindingResult result,RedirectAttributes redirect) {
 		if (result.hasErrors()) { return new ModelAndView(CLIENTE_URI + "form","formErrors",result.getAllErrors()); }
 		cliente = this.clienteRepository.save(cliente);
@@ -54,9 +54,9 @@ public class ClienteController {
 	@GetMapping(value = "remover/{id}")
 	public ModelAndView remover(@PathVariable("id") Long id,RedirectAttributes redirect) {
 		this.clienteRepository.deleteById(id);
-		Iterable<Cliente> clientes = this.clienteRepository.findAll();
+		var clientes = this.clienteRepository.findAll();
 		
-		ModelAndView mv = new ModelAndView(CLIENTE_URI + "list","clientes",clientes);
+		var mv = new ModelAndView(CLIENTE_URI + "list","clientes",clientes);
 		mv.addObject("globalMessage","Cliente removido com sucesso");
 	
 		return mv;
