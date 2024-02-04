@@ -1,0 +1,29 @@
+version: '3.7'
+
+services:
+  db:
+    image: mysql:8
+    cap_add:
+      - SYS_NICE
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_DATABASE: greendog
+      MYSQL_ROOT_PASSWORD: boaglio
+      MYSQL_USER: boaglio
+      MYSQL_PASSWORD: boaglio
+    volumes:
+      - ./mysql-data:/var/lib/mysql
+    networks:
+      - mysql-compose-network
+
+  adminer:
+    image: adminer
+    ports:
+      - "8000:8080"
+    networks:
+      - mysql-compose-network
+
+networks:
+  mysql-compose-network:
+    driver: bridge
