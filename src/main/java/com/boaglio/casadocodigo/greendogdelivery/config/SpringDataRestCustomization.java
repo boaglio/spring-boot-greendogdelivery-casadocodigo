@@ -6,13 +6,14 @@ import org.springframework.stereotype.Component;
 
 import com.boaglio.casadocodigo.greendogdelivery.domain.Item;
 import com.boaglio.casadocodigo.greendogdelivery.repository.ClienteRepository;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
 
 @Component
 public class SpringDataRestCustomization implements RepositoryRestConfigurer
 {
 
 	@Override
-	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
+	public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config, CorsRegistry corsRegistry) {
 		config.exposeIdsFor(Item.class,ClienteRepository.class);
 	}
 }

@@ -1,28 +1,21 @@
 package com.boaglio.casadocodigo.greendogdelivery.rest;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.boaglio.casadocodigo.greendogdelivery.domain.Cliente;
 import com.boaglio.casadocodigo.greendogdelivery.domain.Item;
 import com.boaglio.casadocodigo.greendogdelivery.domain.Pedido;
 import com.boaglio.casadocodigo.greendogdelivery.dto.RespostaDTO;
 import com.boaglio.casadocodigo.greendogdelivery.repository.ClienteRepository;
 import com.boaglio.casadocodigo.greendogdelivery.repository.ItemRepository;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Date;
 
 @RestController 
 public class NovoPedidoController {
 
-	
-	@Autowired
 	public NovoPedidoController(ClienteRepository clienteRepository,ItemRepository itemRepository ) {
 		this.clienteRepository =clienteRepository;
 		this.itemRepository=itemRepository;
@@ -34,22 +27,19 @@ public class NovoPedidoController {
 	@GetMapping("/rest/pedido/novo/{clienteId}/{listaDeItens}")
 	public RespostaDTO novo(@PathVariable("clienteId") Long clienteId,@PathVariable("listaDeItens") String listaDeItens) {
 
-		RespostaDTO dto = new RespostaDTO();
+		var dto = new RespostaDTO();
 
 		try {
-			Optional<Cliente> clienteOpt = clienteRepository.findById(clienteId);
-			Cliente c = clienteOpt.get();
-
-			String[] listaDeItensID = listaDeItens.split(",");
-
-			Pedido pedido = new Pedido();
-
-			double valorTotal = 0;
-			List<Item> itensPedidos = new ArrayList<Item>();
+			var clienteOpt = clienteRepository.findById(clienteId);
+			var c = clienteOpt.get();
+			var listaDeItensID = listaDeItens.split(",");
+			var pedido = new Pedido();
+			var  valorTotal = 0.0;
+			var itensPedidos = new ArrayList<Item>();
 
 			for (String itemId : listaDeItensID) {
-				Optional<Item> itemOpt = itemRepository.findById(Long.parseLong(itemId));
-				Item item = itemOpt.get(); 
+				var itemOpt = itemRepository.findById(Long.parseLong(itemId));
+				var item = itemOpt.get();
 				itensPedidos.add(item);
 				valorTotal += item.getPreco();
 			}
@@ -61,12 +51,12 @@ public class NovoPedidoController {
 
 			this.clienteRepository.saveAndFlush(c);
 			
-			List<Long> pedidosID = new ArrayList<Long>();
+			var pedidosID = new ArrayList<Long>();
 			for (Pedido p : c.getPedidos()) {
 				pedidosID.add(p.getId());
 			}
 
-			Long ultimoPedido = Collections.max(pedidosID);
+			var ultimoPedido = Collections.max(pedidosID);
 
 			dto = new RespostaDTO(ultimoPedido,valorTotal,"Pedido efetuado com sucesso");
 
