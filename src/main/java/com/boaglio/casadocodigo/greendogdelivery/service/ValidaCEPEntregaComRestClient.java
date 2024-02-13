@@ -9,7 +9,7 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestTemplate;
 
 @Service
-public class ValidaCEPEntregaComRestClient {
+public class ValidaCEPEntregaComRestClient implements ValidaCEPEntrega  {
 
 	Logger log = LoggerFactory.getLogger(ValidaCEPEntregaComRestClient.class.getSimpleName());
 
