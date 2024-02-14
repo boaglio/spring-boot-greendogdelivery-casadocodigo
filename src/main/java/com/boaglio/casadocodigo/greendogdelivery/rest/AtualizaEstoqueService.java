@@ -1,8 +1,10 @@
 package com.boaglio.casadocodigo.greendogdelivery.rest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
+import org.springframework.web.client.RestClient;
 
 import com.boaglio.casadocodigo.greendogdelivery.domain.Item;
 import com.boaglio.casadocodigo.greendogdelivery.domain.Pedido;
@@ -10,23 +12,23 @@ import com.boaglio.casadocodigo.greendogdelivery.estoque.domain.Estoque;
 
 @Component
 public class AtualizaEstoqueService {
-	
-	public void send(Pedido pedido) throws Exception { 
+
+	Logger log = LoggerFactory.getLogger(AtualizaEstoqueService.class.getSimpleName());
+
+	public void send(Pedido pedido) {
 		
-		RestTemplate restTemplate = new RestTemplate();
-		String resourceUrl = "http://localhost:9000/api/atualiza";
+		var restClient = RestClient.create();
+		var resourceUrl = "http://localhost:9000/api/atualiza";
 		
 		for (Item item : pedido.getItens()) {
+
+			log.info("Enviando requisicao - atualizando estoque - [ "+item.getNome()+" ] ...");
 			
-			System.out.println("Enviando requisicao - atualizando estoque - [ "+item.getNome()+" ] ...");			
-			
-			Estoque estoque = new Estoque(item.getId(),1l);
-			
-			HttpEntity<Estoque> requestEstoque = new HttpEntity<>(estoque);
-			
-			String responseEstoque = restTemplate.postForObject(resourceUrl, requestEstoque, String.class);
-			
-			System.out.println("Resposta da atualizaçao de estoque: "+responseEstoque);
+			var estoque = new Estoque(item.getId(),1l);
+
+			var responseEstoque = restClient.post().uri(resourceUrl).body(estoque).retrieve().toEntity(String.class);
+
+			log.info("Resposta da atualizaçao de estoque: "+responseEstoque.getBody());
 			
 		}
 		

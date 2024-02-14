@@ -1,22 +1,18 @@
 
 package com.boaglio.casadocodigo.greendogdelivery.controller;
 
-import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
-
+import com.boaglio.casadocodigo.greendogdelivery.dto.MensagemDTO;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-//import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.boaglio.casadocodigo.greendogdelivery.dto.MensagemDTO;
+import java.util.Properties;
 
-//@RefreshScope
 @Controller
 @RequestMapping("/")
 public class IndexController {
@@ -57,10 +53,10 @@ public class IndexController {
 		return request.getServerName() + ":" + request.getServerPort();
 	}
 
-//    @Value("${mensagem}")
+    @Value("${mensagem}")
     private String message;
 
-//    @Value("${debug}")
+    @Value("${debug}")
     private String debug;
 
     @GetMapping("/oferta")
@@ -68,6 +64,5 @@ public class IndexController {
     public MensagemDTO getMessage(HttpServletRequest request) {
         return new MensagemDTO(this.message,request.getServerName() + ":" + request.getServerPort(),this.debug);
     }
- 
-    
+
 }

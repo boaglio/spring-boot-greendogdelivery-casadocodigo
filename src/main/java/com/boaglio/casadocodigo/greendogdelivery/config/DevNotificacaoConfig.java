@@ -11,7 +11,7 @@ public class DevNotificacaoConfig implements Notificacao {
 
 	@Override
 	public boolean envioAtivo() {
-		return false;
+		return true;
 	}
 
 }

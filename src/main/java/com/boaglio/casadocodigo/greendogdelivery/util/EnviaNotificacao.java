@@ -1,5 +1,7 @@
 package com.boaglio.casadocodigo.greendogdelivery.util;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,22 +14,24 @@ public class EnviaNotificacao {
 
     @Autowired
     Notificacao  notificacao;
-    
+
+	Logger logger = LoggerFactory.getLogger(EnviaNotificacao.class.getSimpleName());
+
 	public void enviaEmail(Cliente cliente,Pedido pedido) {
-		
-		System.out.println("Enviar notificacao para "+cliente.getNome() + " - pedido $"+pedido.getValorTotal());
+
+		logger.info("Enviar notificacao para "+cliente.getNome() + " - pedido $"+pedido.getValorTotal());
 		
 		if (notificacao.envioAtivo()) {
 			
 			/*
 			     codigo de envio
 			 */
-			
-			System.out.println("Notificacao enviada!");
+
+			logger.info("Notificacao enviada!");
 			
 		} else {
-			
-			System.out.println("Notificacao desligada!");
+
+			logger.info("Notificacao desligada!");
 		
 		}
 	}
