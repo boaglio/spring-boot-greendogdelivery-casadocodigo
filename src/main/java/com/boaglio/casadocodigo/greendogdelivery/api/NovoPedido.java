@@ -1,6 +1,7 @@
 package com.boaglio.casadocodigo.greendogdelivery.api;
 
 import java.util.List;
+import java.util.Objects;
 
 public class NovoPedido {
 
@@ -44,40 +45,16 @@ public class NovoPedido {
 	}
 
 	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((idCliente == null) ? 0 : idCliente.hashCode());
-		result = prime * result + ((itensId == null) ? 0 : itensId.hashCode());
-		result = prime * result + ((valorTotal == null) ? 0 : valorTotal.hashCode());
-		return result;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		NovoPedido that = (NovoPedido) o;
+		return Objects.equals(idCliente, that.idCliente) && Objects.equals(itensId, that.itensId) && Objects.equals(valorTotal, that.valorTotal);
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		NovoPedido other = (NovoPedido) obj;
-		if (idCliente == null) {
-			if (other.idCliente != null)
-				return false;
-		} else if (!idCliente.equals(other.idCliente))
-			return false;
-		if (itensId == null) {
-			if (other.itensId != null)
-				return false;
-		} else if (!itensId.equals(other.itensId))
-			return false;
-		if (valorTotal == null) {
-			if (other.valorTotal != null)
-				return false;
-		} else if (!valorTotal.equals(other.valorTotal))
-			return false;
-		return true;
+	public int hashCode() {
+		return Objects.hash(idCliente, itensId, valorTotal);
 	}
 
 	@Override

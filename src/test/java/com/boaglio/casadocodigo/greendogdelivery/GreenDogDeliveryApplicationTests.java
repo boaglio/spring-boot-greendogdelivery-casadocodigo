@@ -11,27 +11,24 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
- 
-@RunWith(SpringRunner.class)
+
 @SpringBootTest
-public class GreenDogDeliveryApplicationTests {
+class GreenDogDeliveryApplicationTests {
 
 	@Autowired
 	private WebApplicationContext context;
 
 	private MockMvc mvc;
 
-	@Before
+	@BeforeEach
 	public void setUp() {
 		this.mvc = MockMvcBuilders.webAppContextSetup(this.context).build();
 	}
@@ -39,10 +36,10 @@ public class GreenDogDeliveryApplicationTests {
 	@Test
 	public void testHome() throws Exception {
 
-		String URL1="/api";
-		
+		var URL1="/api";
+
 		System.out.println(this.mvc.perform(get(URL1)).andDo(print()));
-		
+
 		this.mvc.perform(get(URL1)).andExpect(status().isOk())
 				.andExpect(content().string(containsString("clientes")));
 	}
@@ -50,12 +47,12 @@ public class GreenDogDeliveryApplicationTests {
 	@Test
 	public void findClientesByNome() throws Exception {
 
-		String URL2="/api/clientes/search/findByNomeAllIgnoringCase?nome=fernando boaglio";
-		
+		var URL2="/api/clientes/search/findByNomeAllIgnoringCase?nome=fernando boaglio";
+
 		System.out.println(this.mvc.perform(get(URL2)).andDo(print()));
-		
+
 		this.mvc.perform(
-				get(URL2))
+						get(URL2))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("endereco", equalTo("Sampa")));
 	}
@@ -63,43 +60,43 @@ public class GreenDogDeliveryApplicationTests {
 	@Test
 	public void findClientesByNomeContaining() throws Exception {
 
-		String URL3="/api/clientes/search/findByNomeContainingAllIgnoringCase?nome=e";
-		
+		var URL3="/api/clientes/search/findByNomeContainingAllIgnoringCase?nome=e";
+
 		System.out.println(this.mvc.perform(get(URL3)).andDo(print()));
-		
+
 		this.mvc.perform(
-				get(URL3))
+						get(URL3))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("_embedded.clientes", hasSize(2)));
 	}
-	
+
 
 	@Test
 	public void cadastraNovoPedido() throws Exception {
 
 		String URL4="/rest/pedido/novo/1/1,2";
-		
+
 		System.out.println(this.mvc.perform(get(URL4)).andDo(print()));
-		
+
 		this.mvc.perform(
-				get(URL4))
+						get(URL4))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("valorTotal", is(57.0)))
 				.andExpect(jsonPath("pedido", greaterThan(3)))
 				.andExpect(jsonPath("mensagem", equalTo("Pedido efetuado com sucesso")));
 	}
-	
+
 	@Test
 	public void findItem2() throws Exception {
 
 		String URL5="/api/itens/2";
-		
+
 		System.out.println(this.mvc.perform(get(URL5)).andDo(print()));
-		
+
 		this.mvc.perform(
-				get(URL5))
+						get(URL5))
 				.andExpect(status().isOk())
 				.andExpect(jsonPath("preco", equalTo(30.0)));
 	}
-	
+
 }
