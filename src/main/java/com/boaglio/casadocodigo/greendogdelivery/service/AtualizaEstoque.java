@@ -1,30 +1,33 @@
 package com.boaglio.casadocodigo.greendogdelivery.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.reactive.function.client.WebClient;
-
 import com.boaglio.casadocodigo.greendogdelivery.domain.Item;
 import com.boaglio.casadocodigo.greendogdelivery.domain.Pedido;
 import com.boaglio.casadocodigo.greendogdelivery.estoque.domain.Estoque;
 import com.boaglio.casadocodigo.greendogdelivery.queue.Producer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClient;
+import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Component
 public class AtualizaEstoque {
 
-	private enum TIPOS_DE_METODO {
-		REST, FILA, REST_REATIVO;
-	};
+    public AtualizaEstoque(Producer producer, ObjectMapper mapper) {
+        this.producer = producer;
+        this.mapper = mapper;
+    }
 
-	private TIPOS_DE_METODO metodo = TIPOS_DE_METODO.REST_REATIVO;
+    private enum TIPOS_DE_METODO { 	REST, FILA, REST_REATIVO	}
+
+	private final TIPOS_DE_METODO metodo = TIPOS_DE_METODO.REST_REATIVO;
 
 	private static final String SERVER_CONTROLE_ESTOQUE = "http://localhost:9000";
 
@@ -32,40 +35,45 @@ public class AtualizaEstoque {
 
 	private static final String URI_ATUALIZA_ESTOQUE_REATIVO = "/api/atualiza-reativo";
 
-	@Autowired
-	private Producer producer;
+	Logger logger = LoggerFactory.getLogger(AtualizaEstoque.class.getSimpleName());
 
-	@Autowired
-	private ObjectMapper mapper;
+	private final Producer producer;
+
+	private final ObjectMapper mapper;
 
 	public void processar(Pedido pedido) {
 
 		try {
 
-			System.out.println(">>> " + metodo.name());
+			logger.info(">>> " + metodo.name());
 
 			switch (metodo) {
 
 			case REST:
 
-				RestTemplate restTemplate = new RestTemplate();
+				var restClient = RestClient.create();
 
 				for (Item item : pedido.getItens()) {
 
 					String jsonEstoque = null;
 					try {
-						jsonEstoque = mapper.writeValueAsString(new Estoque(item.getId(), 1l));
+						jsonEstoque = mapper.writeValueAsString(new Estoque(item.getId(), 1L));
 					} catch (JsonProcessingException e) {
-						e.printStackTrace();
+						logger.error("Erro:",e);
 					}
 
-					HttpHeaders headers = new HttpHeaders();
+					var headers = new HttpHeaders();
 					headers.setContentType(MediaType.APPLICATION_JSON);
-					HttpEntity<String> request = new HttpEntity<>(jsonEstoque, headers);
-					System.out.println("Request POST = " + request.toString());
+					var request = new HttpEntity<String>(jsonEstoque, headers);
+					logger.info("Request POST = " + request);
 
-					String resultadoPost = restTemplate.postForObject(URL_ATUALIZA_ESTOQUE, request, String.class);
-					System.out.println("Resultado POST = " + resultadoPost);
+					var resultadoPost = restClient
+							                           .post()
+							                           .uri(URL_ATUALIZA_ESTOQUE)
+							                           .body(request)
+													   .retrieve().toEntity(String.class);
+
+					logger.info("Resultado POST = " + resultadoPost);
 				}
 
 				break;
@@ -79,15 +87,19 @@ public class AtualizaEstoque {
 
 				for (Item item : pedido.getItens()) {
 
-					WebClient client = WebClient.create(SERVER_CONTROLE_ESTOQUE);
+					var client = WebClient.create(SERVER_CONTROLE_ESTOQUE);
 
-					Estoque estoque = new Estoque(item.getId(), 1l);
+					var estoque = new Estoque(item.getId(), 1L);
 
-					Mono<String> atualizaReativo = client.post().uri(URI_ATUALIZA_ESTOQUE_REATIVO)
-							.body(Mono.just(estoque), Estoque.class).retrieve().bodyToMono(String.class);
+					var atualizaReativo = client
+							.post()
+							.uri(URI_ATUALIZA_ESTOQUE_REATIVO)
+							.body(Mono.just(estoque), Estoque.class)
+							.retrieve()
+							.bodyToMono(String.class);
 					
-					System.out.print("Resultado POST reativo = ");
-					atualizaReativo.subscribe(System.out::println);
+					logger.info("Resultado POST reativo = ");
+					atualizaReativo.subscribe(logger::info);
 
 				}
 
@@ -95,7 +107,7 @@ public class AtualizaEstoque {
 
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Erro:",e);
 		}
 
 	}

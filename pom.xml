@@ -2,30 +2,23 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-
 	<groupId>com.boaglio.casadocodigo</groupId>
 	<artifactId>green-dog-delivery</artifactId>
-	<version>2.4.0-SNAPSHOT</version>
+	<version>3.2.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
-
 	<name>greendogdelivery</name>
 	<description>Green Dog Delivery</description>
-
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.1</version>
+		<version>3.2.1</version>
 		<relativePath/> 
 	</parent>
-
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<main.basedir>${basedir}/../..</main.basedir> 
-		<dockerfile-maven-version>1.4.13</dockerfile-maven-version>
-		<docker-app-version>2.3</docker-app-version>
+		<main.basedir>${basedir}/../..</main.basedir>
 	</properties>
-
 	<dependencies>
 	   <!-- em prod 
 		<dependency>
@@ -65,10 +58,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-        </dependency>
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
@@ -78,18 +67,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-        <!-- JUnit 5 -->
-        <dependency>
-            <groupId>org.junit.vintage</groupId>
-            <artifactId>junit-vintage-engine</artifactId>
-            <scope>test</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.hamcrest</groupId>
-                    <artifactId>hamcrest-core</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>		
 		<!-- RabbitMQ -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -106,34 +83,12 @@
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 	</dependencies>
-
  	<build>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<plugin>
-				<groupId>com.spotify</groupId>
-				<artifactId>dockerfile-maven-plugin</artifactId>
-				<version>${dockerfile-maven-version}</version>
-				<configuration>
-				 <repository>boaglio/green-dog-delivery</repository>
-				 <tag>${docker-app-version}</tag>
-                 <baseImage>openjdk/11</baseImage>
-                 <entryPoint>["java", "-jar", "/${project.build.finalName}.jar"]</entryPoint>
-                 <exposes>8080</exposes>
-					<resources>
-						<resource>
-							<targetPath>/</targetPath>
-							<directory>${project.build.directory}</directory>
-							<include>${project.build.finalName}.jar</include>
-						</resource>
-					</resources>
-				</configuration>
-			</plugin>	
-			<!--  docker run -p 8080:8080 green-dog-delivery:2.3 -->
 		</plugins>
 	</build>
-
 </project>

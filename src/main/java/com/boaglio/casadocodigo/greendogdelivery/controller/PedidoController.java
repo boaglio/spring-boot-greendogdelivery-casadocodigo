@@ -5,8 +5,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import javax.validation.Valid;
 
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -60,36 +60,36 @@ public class PedidoController {
 		model.put("todosItens",itemRepository.findAll());
 		model.put("todosClientes",clienteRepository.findAll());
 		return new ModelAndView(ITEM_URI + "form",model);
-		 
+
 	}
 
 	@PostMapping(params = "form")
-	public ModelAndView create(@Valid Pedido pedido,BindingResult result,RedirectAttributes redirect) {
+	public ModelAndView create(@Valid Pedido pedido, BindingResult result, RedirectAttributes redirect) {
 		if (result.hasErrors()) { return new ModelAndView(ITEM_URI + "form","formErrors",result.getAllErrors()); }
 
 		if (pedido.getId() != null) {
 
 			Optional<Pedido> pedidoParaAlterarOpt = pedidoRepository.findById(pedido.getId());
 			Pedido pedidoParaAlterar = pedidoParaAlterarOpt.get();
-						
+
 			Optional<Cliente> clienteOpt = clienteRepository.findById(pedidoParaAlterar.getCliente().getId());
 			Cliente c = clienteOpt.get();
-			
+
 			pedidoParaAlterar.setItens(pedido.getItens());
 			double valorTotal = 0;
 			for (Item i : pedido.getItens()) {
 				valorTotal +=i.getPreco();
 			}
 			pedidoParaAlterar.setData(pedido.getData());
-			pedidoParaAlterar.setValorTotal(valorTotal);			
+			pedidoParaAlterar.setValorTotal(valorTotal);
 			c.getPedidos().remove(pedidoParaAlterar);
 			c.getPedidos().add(pedidoParaAlterar);
 			this.clienteRepository.save(c);
 		} else {
-			
+
 			Optional<Cliente> clienteOpt = clienteRepository.findById(pedido.getCliente().getId());
 			Cliente c = clienteOpt.get();
-			 
+
 			double valorTotal = 0;
 			for (Item i : pedido.getItens()) {
 				valorTotal +=i.getPreco();
@@ -110,7 +110,7 @@ public class PedidoController {
 
 		Optional<Pedido> pedidoParaRemoverOpt = pedidoRepository.findById(id);
 		Pedido pedidoParaRemover = pedidoParaRemoverOpt.get();
-		 
+
 		Optional<Cliente> clienteOpt = clienteRepository.findById(pedidoParaRemover.getCliente().getId());
 		Cliente c = clienteOpt.get();
 

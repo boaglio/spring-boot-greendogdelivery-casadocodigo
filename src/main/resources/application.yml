@@ -18,3 +18,7 @@ spring:
     active: dev
   thymeleaf:
     cache: false
+
+# mensagem de oferta
+mensagem: Compre 1 hot dog e ganhe 1 suco de laranja ! Aproveite!
+debug: 1
