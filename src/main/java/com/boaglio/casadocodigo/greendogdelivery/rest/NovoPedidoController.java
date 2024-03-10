@@ -37,24 +37,22 @@ public class NovoPedidoController {
 	@GetMapping("/rest/pedido/novo/{clienteId}/{listaDeItens}")
 	public RespostaDTO novo(@PathVariable("clienteId") Long clienteId,@PathVariable("listaDeItens") String listaDeItens) {
 
-		RespostaDTO dto = new RespostaDTO();
+		RespostaDTO dto ;
+		double valorTotal = 0;
+		long ultimoPedido = 0;
 
 		try {
-			
-			Optional<Cliente> clienteOpt = clienteRepository.findById(clienteId);
-			Cliente c = clienteOpt.get();
 
-			String[] listaDeItensID = listaDeItens.split(",");
-
-			Pedido pedido = new Pedido();
-
-			double valorTotal = 0;
-			List<Item> itensPedidos = new ArrayList<Item>();
+			var clienteOpt = clienteRepository.findById(clienteId);
+			var c = clienteOpt.get();
+			var listaDeItensID = listaDeItens.split(",");
+			var  pedido = new Pedido();
+			var itensPedidos = new ArrayList<Item>();
 
 			for (String itemId : listaDeItensID) {
 				
-				Optional<Item> itemOpt = itemRepository.findById(Long.parseLong(itemId));
-				Item item = itemOpt.get();
+				var itemOpt = itemRepository.findById(Long.parseLong(itemId));
+				var item = itemOpt.get();
 				 
 				itensPedidos.add(item);
 				valorTotal += item.getPreco();
@@ -69,20 +67,19 @@ public class NovoPedidoController {
 			
 			enviaNotificacao.enviaEmail(c,pedido);
 			
-			List<Long> pedidosID = new ArrayList<Long>();
-			for (Pedido p : c.getPedidos()) {
+			var pedidosID = new ArrayList<Long>();
+			for (var p : c.getPedidos()) {
 				pedidosID.add(p.getId());
 			}
 
-			Long ultimoPedido = Collections.max(pedidosID);
+			ultimoPedido = Collections.max(pedidosID);
 
-			dto = new RespostaDTO(ultimoPedido,valorTotal,"Pedido efetuado com sucesso");
+			dto = new RespostaDTO(valorTotal,ultimoPedido,"Pedido efetuado com sucesso");
 
 		} catch (Exception e) {
-			dto.setMensagem("Erro: " + e.getMessage());
+		  dto = new RespostaDTO(valorTotal,ultimoPedido,"Erro: " + e.getMessage());
 		}
 		return dto;
-
 	}
 
 }

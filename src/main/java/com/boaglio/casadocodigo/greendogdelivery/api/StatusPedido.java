@@ -4,6 +4,8 @@ import com.boaglio.casadocodigo.greendogdelivery.domain.Pedido;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
+import java.util.Objects;
+
 @JsonInclude(Include.NON_NULL)
 public class StatusPedido {
 	
@@ -39,35 +41,17 @@ public class StatusPedido {
 	public String toString() {
 		return "StatusPedido [status=" + status + ", pedido=" + pedido + "]";
 	}
-	
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		StatusPedido that = (StatusPedido) o;
+		return Objects.equals(status, that.status) && Objects.equals(pedido, that.pedido);
+	}
+
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((pedido == null) ? 0 : pedido.hashCode());
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
-		return result;
+		return Objects.hash(status, pedido);
 	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		StatusPedido other = (StatusPedido) obj;
-		if (pedido == null) {
-			if (other.pedido != null)
-				return false;
-		} else if (!pedido.equals(other.pedido))
-			return false;
-		if (status == null) {
-			if (other.status != null)
-				return false;
-		} else if (!status.equals(other.status))
-			return false;
-		return true;
-	}
-   
 }
