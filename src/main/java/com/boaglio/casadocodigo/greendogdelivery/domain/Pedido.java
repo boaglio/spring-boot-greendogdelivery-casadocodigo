@@ -2,20 +2,26 @@ package com.boaglio.casadocodigo.greendogdelivery.domain;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.validation.constraints.Min;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Min;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Entity
+@JsonInclude(Include.NON_NULL)
 public class Pedido {
 
 	@Id
@@ -23,6 +29,7 @@ public class Pedido {
 	private Long id;
 
 	@ManyToOne(optional = true)
+	@JsonIgnore
 	private Cliente cliente;
 
 	@ManyToMany
@@ -35,15 +42,19 @@ public class Pedido {
 	@Min(1)
 	private Double valorTotal;
 
-	public Pedido() {}
+	private String status;
 
-	public Pedido(Long id,Cliente cliente,List<Item> itens,Double valorTotal) {
+	public Pedido() {
+	}
+
+	public Pedido(Long id, Cliente cliente, List<Item> itens, Double valorTotal, String status) {
 		super();
 		this.id = id;
 		this.cliente = cliente;
 		this.itens = itens;
 		this.data = new Date();
 		this.valorTotal = valorTotal;
+		this.status = status;
 	}
 
 	public Long getId() {
@@ -86,34 +97,31 @@ public class Pedido {
 		this.valorTotal = valorTotal;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ( (id == null) ? 0 : id.hashCode());
-		return result;
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Pedido other = (Pedido) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Pedido pedido = (Pedido) o;
+		return Objects.equals(id, pedido.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
 	}
 
 	@Override
 	public String toString() {
-		return "Pedido [id=" + id + ", cliente=" + cliente + ", itens=" + itens + ", data=" + data + ", valorTotal=" + valorTotal + "]";
+		return "Pedido [id=" + id + ", cliente=" + cliente + ", itens=" + itens + ", data=" + data + ", valorTotal="
+				+ valorTotal + ", status=" + status + "]";
 	}
 
 }
